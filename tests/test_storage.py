@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -326,20 +326,14 @@ def test_send_file(base_app, s3fs):
 
     with base_app.test_request_context():
         res = s3fs.send_file(
-            'test.txt', mimetype='text/plain', checksum=checksum)
+            'test.txt', mimetype='text/plain')
         assert res.status_code == 302
         h = res.headers
         assert 'Location' in h
-        assert h['Content-Type'] == 'text/plain; charset=utf-8'
-        # FIXME: the lenght is modified somewhere somehow
-        # assert h['Content-Length'] == str(size)
-        assert h['Content-MD5'] == checksum[4:]
-        assert h['ETag'] == '"{0}"'.format(checksum)
 
         res = s3fs.send_file(
-            'myfilename.txt', mimetype='text/plain', checksum='crc32:test')
+            'myfilename.txt', mimetype='text/plain')
         assert res.status_code == 302
-        assert 'Content-MD5' not in dict(res.headers)
 
 
 def test_send_file_fail(base_app, s3fs):
@@ -351,51 +345,6 @@ def test_send_file_fail(base_app, s3fs):
                                               "Permission problem")
         with base_app.test_request_context():
             pytest.raises(StorageError, s3fs.send_file, 'test.txt')
-
-
-def test_send_file_xss_prevention(base_app, s3fs):
-    """Test send file."""
-    data = b'<html><body><script>alert("xss");</script></body></html>'
-    uri, size, checksum = s3fs.save(BytesIO(data))
-
-    with base_app.test_request_context():
-        res = s3fs.send_file(
-            'myfilename.html', mimetype='text/html', checksum=checksum)
-        assert res.status_code == 302
-        h = res.headers
-        assert 'Location' in h
-        assert h['Content-Type'] == 'text/plain; charset=utf-8'
-        # assert h['Content-Length'] == str(size)
-        assert h['Content-MD5'] == checksum[4:]
-        assert h['ETag'] == '"{0}"'.format(checksum)
-        # XSS prevention
-        assert h['Content-Security-Policy'] == 'default-src \'none\';'
-        assert h['X-Content-Type-Options'] == 'nosniff'
-        assert h['X-Download-Options'] == 'noopen'
-        assert h['X-Permitted-Cross-Domain-Policies'] == 'none'
-        assert h['X-Frame-Options'] == 'deny'
-        assert h['X-XSS-Protection'] == '1; mode=block'
-        assert h['Content-Disposition'] == 'inline'
-
-        # Image
-        h = s3fs.send_file('image.png', mimetype='image/png').headers
-        assert h['Content-Type'] == 'image/png'
-        assert h['Content-Disposition'] == 'inline'
-
-        # README text file
-        h = s3fs.send_file('README').headers
-        assert h['Content-Type'] == 'text/plain; charset=utf-8'
-        assert h['Content-Disposition'] == 'inline'
-
-        # Zip
-        h = s3fs.send_file('archive.zip').headers
-        assert h['Content-Type'] == 'application/octet-stream'
-        assert h['Content-Disposition'] == 'attachment; filename=archive.zip'
-
-        # PDF
-        h = s3fs.send_file('doc.pdf').headers
-        assert h['Content-Type'] == 'application/octet-stream'
-        assert h['Content-Disposition'] == 'attachment; filename=doc.pdf'
 
 
 def test_non_unicode_filename(base_app, s3fs):

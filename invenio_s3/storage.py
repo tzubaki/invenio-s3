@@ -7,7 +7,7 @@
 """S3 file storage interface."""
 from __future__ import absolute_import, print_function
 
-from io import BytesIO
+from functools import partial
 
 import s3fs
 from flask import current_app
@@ -121,24 +121,14 @@ class S3FSFileStorage(PyFSFileStorage):
         """Send the file to the client."""
         try:
             fs, path = self._get_fs()
-            url = fs.url(path, expires=60)
-
-            md5_checksum = None
-            if checksum:
-                algo, value = checksum.split(':')
-                if algo == 'md5':
-                    md5_checksum = value
+            s3_url_builder = partial(
+                fs.url, path, expires=current_app.config['S3_URL_EXPIRATION'])
 
             return redirect_stream(
-                url,
+                s3_url_builder,
                 filename,
-                self._size,
-                self._modified,
                 mimetype=mimetype,
                 restricted=restricted,
-                etag=checksum,
-                content_md5=md5_checksum,
-                chunk_size=chunk_size,
                 trusted=trusted,
                 as_attachment=as_attachment,
             )
