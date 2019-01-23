@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
-
 """S3 file storage support for Invenio. """
 
 import os
@@ -19,7 +18,7 @@ tests_require = [
     'coverage>=4.0',
     'invenio-db[all]>=1.0.2',
     'isort>=4.3.3',
-    'moto>=1.3.5',
+    'moto>=1.3.7',
     'pydocstyle>=1.0.0',
     'pytest-cache>=1.0',
     'pytest-cov>=1.8.0',
@@ -44,13 +43,12 @@ setup_requires = [
 ]
 
 install_requires = [
-    'boto3==1.7.84', # See https://github.com/spulec/moto/issues/1793
+    'boto3>=1.9.83',
+    'invenio-files-rest>=1.0.0a23',
     's3fs>=0.1.5',
-    'invenio-files-rest>=1.0.0a23'
 ]
 
 packages = find_packages()
-
 
 # Get the version string. Cannot be done with import!
 g = {}
