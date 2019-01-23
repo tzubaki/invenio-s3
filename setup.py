@@ -16,6 +16,7 @@ history = open('CHANGES.rst').read()
 tests_require = [
     'check-manifest>=0.25',
     'coverage>=4.0',
+    'invenio-app>=1.0.0',
     'invenio-db[all]>=1.0.2',
     'isort>=4.3.3',
     'moto>=1.3.7',
@@ -24,7 +25,8 @@ tests_require = [
     'pytest-cov>=1.8.0',
     'pytest-invenio>=1.0.4,<1.1.0',
     'pytest-pep8>=1.0.6',
-    'pytest>=2.8.0',
+    'pytest>=3.8.0',
+    'redis>=2.10.5',
 ]
 
 extras_require = {

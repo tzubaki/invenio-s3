@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -12,6 +12,7 @@ import hashlib
 import boto3
 import pytest
 from flask import Flask, current_app
+from invenio_app.factory import create_api
 from invenio_db import InvenioDB
 from invenio_files_rest import InvenioFilesREST
 from moto import mock_s3
@@ -32,17 +33,7 @@ def app_config(app_config):
 @pytest.fixture(scope='module')
 def create_app():
     """Application factory fixture."""
-    def factory(**config):
-        app = Flask('testapp')
-        app.config.update(**config)
-
-        InvenioDB(app)
-        InvenioFilesREST(app)
-        InvenioS3(app)
-
-        return app
-
-    return factory
+    return create_api
 
 
 @pytest.fixture(scope='function')
