@@ -8,6 +8,8 @@
 
 from __future__ import absolute_import, print_function
 
+import warnings
+
 import boto3
 from flask import current_app
 from werkzeug.utils import cached_property
@@ -26,9 +28,29 @@ class InvenioS3(object):
     @cached_property
     def init_s3f3_info(self):
         """Gather all the information needed to start the S3FSFileSystem."""
+        if 'S3_ACCCESS_KEY_ID' in current_app.config:
+            current_app.config['S3_ACCESS_KEY_ID'] = current_app.config[
+                'S3_ACCCESS_KEY_ID']
+            warnings.warn(
+                'Key S3_ACCCESS_KEY_ID contained a typo and has been '
+                'corrected to S3_ACCESS_KEY_ID, support for the '
+                'flawed version will be removed.',
+                DeprecationWarning
+            )
+
+        if 'S3_SECRECT_ACCESS_KEY' in current_app.config:
+            current_app.config['S3_SECRET_ACCESS_KEY'] = current_app.config[
+                'S3_SECRECT_ACCESS_KEY']
+            warnings.warn(
+                'Key S3_SECRECT_ACCESS_KEY contained a typo and has been '
+                'corrected to S3_SECRET_ACCESS_KEY, support for the '
+                'flawed version will be removed.',
+                DeprecationWarning
+            )
+
         info = dict(
-            key=current_app.config.get('S3_ACCCESS_KEY_ID', ''),
-            secret=current_app.config.get('S3_SECRECT_ACCESS_KEY', ''),
+            key=current_app.config.get('S3_ACCESS_KEY_ID', ''),
+            secret=current_app.config.get('S3_SECRET_ACCESS_KEY', ''),
             client_kwargs={},
             config_kwargs={
                 's3': {
