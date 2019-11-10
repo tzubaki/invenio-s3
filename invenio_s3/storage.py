@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -25,11 +25,11 @@ class S3FSFileStorage(PyFSFileStorage):
         super(S3FSFileStorage, self).__init__(fileurl, **kwargs)
 
     def _get_fs(self, *args, **kwargs):
-        """Ge PyFilesystem instance and S3 real path."""
+        """Get PyFilesystem instance and S3 real path."""
         if not self.fileurl.startswith('s3://'):
             return super(S3FSFileStorage, self)._get_fs(*args, **kwargs)
 
-        info = current_app.extensions['invenio-s3'].init_s3f3_info
+        info = current_app.extensions['invenio-s3'].init_s3fs_info
         fs = s3fs.S3FileSystem(**info)
 
         return (fs, self.fileurl)
