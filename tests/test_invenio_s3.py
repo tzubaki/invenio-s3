@@ -22,9 +22,12 @@ def test_init(appctx):
     assert 'invenio-s3' in appctx.extensions
 
     appctx.config['S3_ENDPOINT_URL'] = 'https://example.com:1234'
+    appctx.config['S3_REGION_NAME'] = 'eu-west-1'
     s3_connection_info = appctx.extensions['invenio-s3'].init_s3f3_info
     assert s3_connection_info['client_kwargs'][
         'endpoint_url'] == 'https://example.com:1234'
+    assert s3_connection_info['client_kwargs'][
+        'region_name'] == 'eu-west-1'
 
 
 def test_access_key(appctx):
