@@ -56,7 +56,9 @@ class InvenioS3(object):
                 's3': {
                     'addressing_style': 'path',
                 },
-                'signature_version': 's3v4',
+                'signature_version': current_app.config.get(
+                    'S3_SIGNATURE_VERSION', 's3v4'
+                ),
             },
         )
 
