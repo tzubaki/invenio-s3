@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019, 2020 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -63,3 +63,14 @@ See `Amazon Boto3 documentation on configuration variables
 <https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html#configuration-file>`_
 for more information.
 """
+
+S3_MAXIMUM_NUMBER_OF_PARTS = 10000
+"""Maximum number of parts to be used.
+See `AWS Multipart Upload Overview
+<https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html>`_ for more
+information.
+"""
+
+S3_DEFAULT_BLOCK_SIZE = 5 * 2**20
+"""Default block size value used to send multi-part uploads to S3.
+Typically 5Mb is minimum allowed by the API."""

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019, 2020 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -15,8 +15,6 @@ import tempfile
 from io import BytesIO
 
 import pytest
-import requests
-from flask import url_for
 from invenio_files_rest.errors import FileSizeError, StorageError, \
     UnexpectedFileSizeError
 from invenio_files_rest.limiters import FileSizeLimit
@@ -112,7 +110,6 @@ def test_delete(s3_bucket, s3fs_testpath, s3fs):
 ))
 def test_save(s3_bucket, s3fs_testpath, s3fs, get_md5, data):
     """Test save."""
-    print(len(data))
     uri, size, checksum = s3fs.save(BytesIO(data))
     assert uri == s3fs_testpath
     assert size == len(data)
@@ -134,7 +131,7 @@ def test_save_failcleanup(s3fs, s3fs_testpath, get_md5):
     data = b'somedata'
 
     def fail_callback(total, size):
-        assert exists(s3fs_testpath)
+        assert fs.exists(s3fs_testpath)
         raise Exception('Something bad happened')
 
     pytest.raises(
@@ -233,9 +230,8 @@ def test_update(s3fs, get_md5, file_size):
 
 def test_update_fail(s3fs, s3fs_testpath, get_md5):
     """Test update of file."""
-
     def fail_callback(total, size):
-        assert exists(s3fs_testpath)
+        assert fs.exists(s3fs_testpath)
         raise Exception('Something bad happened')
 
     s3fs.initialize(size=100)
@@ -367,3 +363,18 @@ def test_non_unicode_filename(base_app, s3fs):
             'żółć.txt', mimetype='text/plain', checksum=checksum)
         assert res.status_code == 302
         assert res.headers['Content-Disposition'] == 'inline'
+
+
+def test_block_size(appctx, s3_bucket, s3fs_testpath, s3fs, get_md5):
+    """Test block size update on the S3FS client."""
+    # Set file size to 4 times the default block size
+    data = b'a' * appctx.config['S3_DEFAULT_BLOCK_SIZE'] * 4
+    # Set the number of maximum parts to two
+    appctx.config['S3_MAXIMUM_NUMBER_OF_PARTS'] = 2
+    uri, size, checksum = s3fs.save(BytesIO(data),
+                                    size=len(data))
+    # The block size should be 2 times the default block size
+    assert s3fs.block_size == appctx.config['S3_DEFAULT_BLOCK_SIZE'] * 2
+    assert uri == s3fs_testpath
+    assert size == len(data)
+    assert checksum == get_md5(data)
