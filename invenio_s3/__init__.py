@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019, 2020 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -18,9 +18,9 @@ for each S3 bucket. This is just for simplicity, it can used however needed.
 
 When creating a new location which will use the S3 API, the URI needs to start
 with ``s3://``, for example
-``invenio files location S3_default s3://myserver.com/b1 --default`` will
+``invenio files location s3_default s3://my-bucket --default`` will
 create a new location, set it as default location for your instance and use the
-bucket ``b1``. For more information about this command check
+bucket ``my-bucket``. For more information about this command check
 `Invenio-Files-Rest <https://invenio-files-rest.readthedocs.io/en/latest/>`_
 documentation.
 
