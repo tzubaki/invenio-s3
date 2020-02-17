@@ -1,10 +1,15 @@
 ..
-    Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+    Copyright (C) 2018, 2019, 2020 Esteban J. G. Gabancho.
     Invenio-S3 is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.
 
 Changes
 =======
+
+Version 1.0.2 (released 2020-02-17)
+
+- Fixes typos on configuration variables and cached properties.
+- Adds AWS region name and signature version to configuration.
 
 Version 1.0.1 (released 2019-01-23)
 
