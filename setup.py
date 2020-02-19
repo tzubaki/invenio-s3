@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019, 2020 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -16,7 +16,8 @@ history = open('CHANGES.rst').read()
 tests_require = [
     'check-manifest>=0.25',
     'coverage>=4.0',
-    'invenio-app>=1.0.0',
+    'invenio-base>=1.2.0',
+    'invenio-app>=1.1.0',
     'invenio-db[all]>=1.0.2',
     'isort>=4.3.3',
     'moto>=1.3.7',
@@ -46,7 +47,7 @@ setup_requires = [
 
 install_requires = [
     'boto3>=1.9.83',
-    'invenio-files-rest>=1.0.0a23',
+    'invenio-files-rest>=1.0.0',
     's3fs>=0.1.5,<0.3.0', # Newer versions only allow python >= 3.5
 ]
 

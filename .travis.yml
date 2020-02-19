@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2018, 2019, 2020 Esteban J. G. Gabancho.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -30,8 +30,9 @@ env:
     - REQUIREMENTS=devel
 
 python:
-  - "2.7"
-  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
 
 before_install:
   - "nvm install 6; nvm use 6"
