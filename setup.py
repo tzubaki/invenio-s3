@@ -15,7 +15,7 @@ history = open('CHANGES.rst').read()
 
 tests_require = [
     'check-manifest>=0.25',
-    'coverage>=4.0',
+    'coverage>=5.0',
     'invenio-base>=1.2.0',
     'invenio-app>=1.2.0',
     'invenio-db[all]>=1.0.2',
