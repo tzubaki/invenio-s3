@@ -6,6 +6,12 @@
 Changes
 =======
 
+Version 1.0.3 (released 2020-04-25)
+
+- Allow for dynamic part size for multipart uploads.
+- Adds new configuration variables to define default part size and maximum
+  number of parts.
+
 Version 1.0.2 (released 2020-02-17)
 
 - Fixes typos on configuration variables and cached properties.
