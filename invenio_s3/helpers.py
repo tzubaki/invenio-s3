@@ -25,7 +25,7 @@ def redirect_stream(s3_url_builder,
 
     :param url: redirection URL
 
-    :return: Flaks response.
+    :return: Flask response.
     """
     # Guess mimetype from filename if not provided.
     if mimetype is None and filename:

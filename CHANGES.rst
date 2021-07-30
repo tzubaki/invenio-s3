@@ -6,6 +6,11 @@
 Changes
 =======
 
+Version 1.0.4 (released 2021-07-30)
+
+- Fix number of parts calculations.
+- Removed Python 2.7 support.
+
 Version 1.0.3 (released 2020-04-25)
 
 - Allow for dynamic part size for multipart uploads.
