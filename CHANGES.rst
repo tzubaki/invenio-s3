@@ -6,6 +6,10 @@
 Changes
 =======
 
+Version 1.0.5 (released 2021-10-20)
+
+- Bump versions to support Flask v2.
+
 Version 1.0.4 (released 2021-07-30)
 
 - Fix number of parts calculations.
