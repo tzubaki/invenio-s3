@@ -2,13 +2,12 @@
 #
 # Copyright (C) 2018 Esteban J. G. Gabancho.
 # Copyright (C) 2022 Graz University of Technology.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Sphinx configuration."""
-
-from __future__ import print_function
 
 import sphinx.environment
 

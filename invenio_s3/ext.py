@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 """S3 file storage support for Invenio."""
-
-from __future__ import absolute_import, print_function
 
 import warnings
 
