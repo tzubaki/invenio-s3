@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2018, 2019 Esteban J. G. Gabancho.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio-S3 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 """Pytest configuration."""
-from __future__ import absolute_import, print_function
-
 import hashlib
 
 import boto3
@@ -15,7 +14,7 @@ from flask import Flask, current_app
 from invenio_app.factory import create_api
 from invenio_db import InvenioDB
 from invenio_files_rest import InvenioFilesREST
-from moto import mock_s3
+from moto import mock_aws
 
 from invenio_s3 import InvenioS3, S3FSFileStorage
 
@@ -39,7 +38,7 @@ def create_app():
 @pytest.fixture(scope="function")
 def s3_bucket(appctx):
     """S3 bucket fixture."""
-    with mock_s3():
+    with mock_aws():
         session = boto3.Session(
             aws_access_key_id=current_app.config.get("S3_ACCESS_KEY_ID"),
             aws_secret_access_key=current_app.config.get("S3_SECRECT_ACCESS_KEY"),
