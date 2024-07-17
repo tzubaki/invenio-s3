@@ -52,7 +52,7 @@ class InvenioS3(object):
         info = dict(
             key=current_app.config.get("S3_ACCESS_KEY_ID", ""),
             secret=current_app.config.get("S3_SECRET_ACCESS_KEY", ""),
-            client_kwargs={},
+            client_kwargs={"use_ssl": False},
             config_kwargs={
                 "s3": {
                     "addressing_style": "path",
