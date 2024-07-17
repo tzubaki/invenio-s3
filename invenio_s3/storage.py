@@ -51,7 +51,7 @@ class S3FSFileStorage(PyFSFileStorage):
             return super(S3FSFileStorage, self)._get_fs(*args, **kwargs)
 
         info = current_app.extensions["invenio-s3"].init_s3fs_info
-        fs = s3fs.S3FileSystem(default_block_size=self.block_size, use_ssl=False, **info)
+        fs = s3fs.S3FileSystem(default_block_size=self.block_size, **info)
 
         return (fs, self.fileurl)
 
