@@ -18,6 +18,8 @@ If set to a value (including the "http/https" scheme) it will be passed as
 ``endpoint_url`` to boto3 `client
 <https://boto3.readthedocs.io/en/latest/reference/core/session.html#boto3.session.Session.client>`_.
 """
+S3_USE_SSL = False  # Set to False to disable SSL
+#S3_USE_SSL = True
 
 S3_REGION_NAME = None
 """S3 region name

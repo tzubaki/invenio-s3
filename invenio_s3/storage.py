@@ -47,16 +47,19 @@ class S3FSFileStorage(PyFSFileStorage):
 
     def _get_fs(self, *args, **kwargs):
         """Get PyFilesystem instance and S3 real path."""
-        if not self.fileurl.startswith("s3://") and not self.fileurl.startswith("https://"):
+        if not self.fileurl.startswith("s3://") and not self.fileurl.startswith("https://")::
             return super(S3FSFileStorage, self)._get_fs(*args, **kwargs)
 
         info = current_app.extensions["invenio-s3"].init_s3fs_info
-        if self.fileurl.startswith("https://"):
-            info['use_ssl'] = False  # Disable SSL for https URLs
+        # Ensure that the use_ssl parameter is included in the client_kwargs
+        use_ssl = current_app.config.get("S3_USE_SSL", False)
+        info["client_kwargs"]["use_ssl"] = use_ssl
+
+        
         fs = s3fs.S3FileSystem(default_block_size=self.block_size, **info)
 
         return (fs, self.fileurl)
-        
+
     @set_blocksize
     def initialize(self, size=0):
         """Initialize file on storage and truncate to given size."""

@@ -70,6 +70,9 @@ class InvenioS3(object):
         region_name = current_app.config.get("S3_REGION_NAME", None)
         if region_name:
             info["client_kwargs"]["region_name"] = region_name
+               
+        # Add use_ssl to client_kwargs
+        info["client_kwargs"]["use_ssl"] = current_app.config.get("S3_USE_SSL", False)
 
         return info
 
