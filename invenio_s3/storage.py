@@ -47,7 +47,7 @@ class S3FSFileStorage(PyFSFileStorage):
 
     def _get_fs(self, *args, **kwargs):
         """Get PyFilesystem instance and S3 real path."""
-        if not self.fileurl.startswith("s3://") and not self.fileurl.startswith("https://")::
+        if not self.fileurl.startswith("s3://") and not self.fileurl.startswith("https://"):
             return super(S3FSFileStorage, self)._get_fs(*args, **kwargs)
 
         info = current_app.extensions["invenio-s3"].init_s3fs_info
