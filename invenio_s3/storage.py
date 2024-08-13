@@ -52,7 +52,7 @@ class S3FSFileStorage(PyFSFileStorage):
 
         info = current_app.extensions["invenio-s3"].init_s3fs_info
         # Ensure that the use_ssl parameter is included in the client_kwargs
-         use_ssl = current_app.config.get("S3_USE_SSL", False)
+        use_ssl = current_app.config.get("S3_USE_SSL", False)
         info["client_kwargs"]["use_ssl"] = use_ssl
 
         
