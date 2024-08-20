@@ -47,7 +47,7 @@ class S3FSFileStorage(PyFSFileStorage):
 
     def _get_fs(self, *args, **kwargs):
         """Get PyFilesystem instance and S3 real path."""
-        if not self.fileurl.startswith("s3://") and not self.fileurl.startswith("https://"):
+        if not self.fileurl.startswith("s3://"):
             return super(S3FSFileStorage, self)._get_fs(*args, **kwargs)
 
         info = current_app.extensions["invenio-s3"].init_s3fs_info
@@ -178,7 +178,7 @@ class S3FSFileStorage(PyFSFileStorage):
         If the source is an S3 stored object the copy process happens on the S3
         server side, otherwise we use the normal ``FileStorage`` copy method.
         """
-        if src.fileurl.startswith("s3://") or src.fileurl.startswith("https://"):
+        if src.fileurl.startswith("s3://"):
             fs, path = self._get_fs()
             fs.copy(src.fileurl, path)
         else:
