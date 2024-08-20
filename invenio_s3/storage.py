@@ -178,7 +178,7 @@ class S3FSFileStorage(PyFSFileStorage):
         If the source is an S3 stored object the copy process happens on the S3
         server side, otherwise we use the normal ``FileStorage`` copy method.
         """
-        if src.fileurl.startswith("s3://"):
+        if src.fileurl.startswith("s3://") or src.fileurl.startswith("https://"):
             fs, path = self._get_fs()
             fs.copy(src.fileurl, path)
         else:
