@@ -54,8 +54,8 @@ class S3FSFileStorage(PyFSFileStorage):
         # Ensure that the use_ssl parameter is included in the client_kwargs
         use_ssl = current_app.config.get("S3_USE_SSL", True)
     #   info["client_kwargs"]["use_ssl"] = use_ssl
-        info["use_ssl"] = use_ssl
-        info["verify"] = False
+    #   info["use_ssl"] = use_ssl
+        info["client_kwargs"]["verify"] = False
         
         fs = s3fs.S3FileSystem(default_block_size=self.block_size, **info)
 
